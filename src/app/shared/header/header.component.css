@@ -5,17 +5,18 @@ nav {
     padding: 1rem 2rem;
     background-color: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 1000;
-    width: 100%;
-    overflow-x: hidden; /* Prevent horizontal scroll */
+    height: 70px;
+    /* Fixed height */
 }
 
 .logo a {
     font-size: 1.5rem;
     font-weight: bold;
-    text-decoration: none;
     color: #333;
 }
 
@@ -26,22 +27,31 @@ nav {
 }
 
 .nav-links a {
-    text-decoration: none;
     color: #333;
     padding: 0.5rem 1rem;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #007bff;
 }
 
 .quote-btn {
     background-color: #007bff;
     color: white !important;
     border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.quote-btn:hover {
+    background-color: #0056b3;
 }
 
 .active {
     font-weight: bold;
+    color: #007bff;
 }
 
-/* Improved mobile responsiveness */
 @media (max-width: 768px) {
     nav {
         padding: 1rem;
@@ -50,7 +60,7 @@ nav {
     .nav-links {
         gap: 0.5rem;
     }
-    
+
     .nav-links a {
         padding: 0.3rem 0.5rem;
         font-size: 0.9rem;
@@ -58,21 +68,5 @@ nav {
 
     .logo a {
         font-size: 1.2rem;
-    }
-}
-
-/* For very small screens */
-@media (max-width: 480px) {
-    .nav-links {
-        gap: 0.3rem;
-    }
-
-    .nav-links a {
-        padding: 0.3rem;
-        font-size: 0.8rem;
-    }
-
-    .quote-btn {
-        padding: 0.3rem 0.5rem;
     }
 }
