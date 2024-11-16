@@ -2,55 +2,54 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-
-interface LoginData {
-    username: string;
-    password: string;
-    rememberMe: boolean;
-}
+import { AuthService } from '../../services/auth.service';
 
 @Component({
-    selector: 'app-login',
-    standalone: true,
-    imports: [CommonModule, FormsModule],
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.css']
+  selector: 'app-login',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-    loginData: LoginData = {
-        username: '',
-        password: '',
-        rememberMe: false
-    };
+  loginData = {
+    username: '',
+    password: '',
+    rememberMe: false
+  };
+  
+  isLoading = false;
+  errorMessage = '';
+  showPassword = false;
 
-    showPassword: boolean = false;
-    isLoading: boolean = false;
-    errorMessage: string = '';
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
-    constructor(private router: Router) {}
+  onSubmit() {
+    this.isLoading = true;
+    this.errorMessage = '';
 
-    togglePassword() {
-        this.showPassword = !this.showPassword;
-    }
+    this.authService.login(this.loginData.username, this.loginData.password)
+      .subscribe({
+        next: (response) => {
+          if (this.loginData.rememberMe) {
+            // Handle remember me functionality if needed
+          }
+          this.router.navigate(['/dashboard']);
+        },
+        error: (error) => {
+          this.errorMessage = 'Invalid username or password';
+          this.isLoading = false;
+        },
+        complete: () => {
+          this.isLoading = false;
+        }
+      });
+  }
 
-    onSubmit() {
-        console.log('Login attempt:', this.loginData); // Debug log
-        this.isLoading = true;
-        this.errorMessage = '';
-
-        // Simulate API call
-        setTimeout(() => {
-            if (this.loginData.username === 'admin' && this.loginData.password === 'admin123') {
-                // Set login status in localStorage
-                localStorage.setItem('isLoggedIn', 'true');
-                // Navigate to dashboard
-                this.router.navigate(['/dashboard']);
-                console.log('Login successful'); // Debug log
-            } else {
-                this.errorMessage = 'Invalid username or password';
-                console.log('Login failed'); // Debug log
-            }
-            this.isLoading = false;
-        }, 1000);
-    }
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
 }

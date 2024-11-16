@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ContactService } from '../../services/contact.service';
 import { QuoteService } from '../../services/quote.service';
 import { Contact, Quote } from '../../models/types'; 
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-dashboard',
@@ -26,7 +27,8 @@ export class DashboardComponent implements OnInit {
     constructor(
         private router: Router,
         private contactService: ContactService,
-        private quoteService: QuoteService
+        private quoteService: QuoteService,
+        private authService: AuthService
     ) {}
 
     ngOnInit() {
@@ -109,7 +111,7 @@ export class DashboardComponent implements OnInit {
     }
 
     logout() {
-        localStorage.removeItem('isLoggedIn');
+        this.authService.logout();
         this.router.navigate(['/login']);
     }
 
