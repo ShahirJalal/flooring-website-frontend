@@ -1,9 +1,48 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
+    width: 100%;
+    font-family: Arial, sans-serif;
 }
 
 main {
     flex: 1;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* For better typography */
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+}
+
+/* For smoother scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* For better links */
+a {
+    text-decoration: none;
+}
+
+/* For better button defaults */
+button {
+    border: none;
+    cursor: pointer;
+}
+
+/* For better image handling */
+img {
+    max-width: 100%;
+    height: auto;
 }
