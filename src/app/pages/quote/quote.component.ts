@@ -1,18 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
-interface QuoteForm {
-  name: string;
-  email: string;
-  phone: string;
-  address: string;
-  floorType: string;
-  roomType: string;
-  squareFeet: number;
-  timeline: string;
-  message: string;
-}
+import { QuoteService } from '../../services/quote.service';
 
 @Component({
   selector: 'app-quote',
@@ -22,7 +11,7 @@ interface QuoteForm {
   styleUrls: ['./quote.component.css']
 })
 export class QuoteComponent {
-  quoteData: QuoteForm = {
+  quoteData = {
     name: '',
     email: '',
     phone: '',
@@ -34,21 +23,31 @@ export class QuoteComponent {
     message: ''
   };
 
-  onSubmit() {
-    console.log('Quote form submitted:', this.quoteData);
-    // Here you'll handle the form submission to backend
+  constructor(private quoteService: QuoteService) {}
 
-    // Reset form after submission
-    this.quoteData = {
-      name: '',
-      email: '',
-      phone: '',
-      address: '',
-      floorType: '',
-      roomType: '',
-      squareFeet: 0,
-      timeline: '',
-      message: ''
-    };
+  onSubmit() {
+    this.quoteService.submitQuote(this.quoteData).subscribe({
+      next: (response) => {
+        console.log('Quote submitted successfully', response);
+        // Reset form
+        this.quoteData = {
+          name: '',
+          email: '',
+          phone: '',
+          address: '',
+          floorType: '',
+          roomType: '',
+          squareFeet: 0,
+          timeline: '',
+          message: ''
+        };
+        // Show success message
+        alert('Quote submitted successfully!');
+      },
+      error: (error) => {
+        console.error('Error submitting quote', error);
+        alert('Error submitting quote. Please try again.');
+      }
+    });
   }
 }

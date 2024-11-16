@@ -5,6 +5,8 @@ import { PortfolioComponent } from './pages/portfolio/portfolio.component';
 import { QuoteComponent } from './pages/quote/quote.component';
 import { ServicesComponent } from './pages/services/services.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { LoginComponent } from './pages/login/login.component';
+import { AuthGuard } from './auth.guard';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -12,6 +14,11 @@ export const routes: Routes = [
   { path: 'portfolio', component: PortfolioComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'quote', component: QuoteComponent },
-  { path: 'dashboard', component: DashboardComponent },
+  { path: 'login', component: LoginComponent },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [AuthGuard]
+  },
   { path: '**', redirectTo: '' }
 ];

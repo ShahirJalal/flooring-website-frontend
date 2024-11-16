@@ -1,30 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
-interface Contact {
-    id: number;
-    createdAt: Date;
-    name: string;
-    email: string;
-    phone: string;
-    subject: string;
-    message: string;
-    status: 'completed' | 'not completed';
-}
-
-interface Quote {
-    id: number;
-    createdAt: Date;
-    name: string;
-    email: string;
-    phone: string;
-    floorType: string;
-    roomType: string;
-    squareFeet: number;
-    timeline: string;
-    status: 'completed' | 'not completed';
-}
+import { Router } from '@angular/router';
+import { ContactService } from '../../services/contact.service';
+import { QuoteService } from '../../services/quote.service';
+import { Contact, Quote } from '../../models/types'; 
 
 @Component({
     selector: 'app-dashboard',
@@ -41,40 +21,47 @@ export class DashboardComponent implements OnInit {
     filteredQuotes: Quote[] = [];
     contactSearchTerm: string = '';
     quoteSearchTerm: string = '';
+    isLoading: boolean = false;
+
+    constructor(
+        private router: Router,
+        private contactService: ContactService,
+        private quoteService: QuoteService
+    ) {}
 
     ngOnInit() {
-        // Fetch data from API (to be implemented)
-        // For now, using mock data
-        this.contacts = [
-            {
-                id: 1,
-                createdAt: new Date(),
-                name: 'John Doe',
-                email: 'john@example.com',
-                phone: '1234567890',
-                subject: 'General Inquiry',
-                message: 'I would like to know more about your services.',
-                status: 'not completed'
-            }
-        ];
+        this.loadContacts();
+        this.loadQuotes();
+    }
 
-        this.quotes = [
-            {
-                id: 1,
-                createdAt: new Date(),
-                name: 'Jane Smith',
-                email: 'jane@example.com',
-                phone: '0987654321',
-                floorType: 'hardwood',
-                roomType: 'living',
-                squareFeet: 500,
-                timeline: '1month',
-                status: 'not completed'
+    loadContacts() {
+        this.isLoading = true;
+        this.contactService.getAllContacts().subscribe({
+            next: (data) => {
+                this.contacts = data;
+                this.filteredContacts = data;
+                this.isLoading = false;
+            },
+            error: (error) => {
+                console.error('Error loading contacts:', error);
+                this.isLoading = false;
             }
-        ];
+        });
+    }
 
-        this.filteredContacts = [...this.contacts];
-        this.filteredQuotes = [...this.quotes];
+    loadQuotes() {
+        this.isLoading = true;
+        this.quoteService.getAllQuotes().subscribe({
+            next: (data) => {
+                this.quotes = data;
+                this.filteredQuotes = data;
+                this.isLoading = false;
+            },
+            error: (error) => {
+                console.error('Error loading quotes:', error);
+                this.isLoading = false;
+            }
+        });
     }
 
     searchContacts() {
@@ -92,12 +79,43 @@ export class DashboardComponent implements OnInit {
     }
 
     toggleStatus(contact: Contact) {
-        contact.status = contact.status === 'completed' ? 'not completed' : 'completed';
-        // API call to update status (to be implemented)
+        const newStatus = contact.status === 'completed' ? 'not completed' : 'completed';
+        
+        this.contactService.updateStatus(contact.id, newStatus).subscribe({
+            next: (updatedContact) => {
+                contact.status = updatedContact.status;
+            },
+            error: (error) => {
+                console.error('Error updating contact status:', error);
+                // Revert the status if update fails
+                contact.status = contact.status === 'completed' ? 'not completed' : 'completed';
+            }
+        });
     }
 
     toggleQuoteStatus(quote: Quote) {
-        quote.status = quote.status === 'completed' ? 'not completed' : 'completed';
-        // API call to update status (to be implemented)
+        const newStatus = quote.status === 'completed' ? 'not completed' : 'completed';
+        
+        this.quoteService.updateStatus(quote.id, newStatus).subscribe({
+            next: (updatedQuote) => {
+                quote.status = updatedQuote.status;
+            },
+            error: (error) => {
+                console.error('Error updating quote status:', error);
+                // Revert the status if update fails
+                quote.status = quote.status === 'completed' ? 'not completed' : 'completed';
+            }
+        });
+    }
+
+    logout() {
+        localStorage.removeItem('isLoggedIn');
+        this.router.navigate(['/login']);
+    }
+
+    // Optional: Add refresh method
+    refresh() {
+        this.loadContacts();
+        this.loadQuotes();
     }
 }
