@@ -29,7 +29,7 @@
 .hero button {
     padding: 1rem 2rem;
     font-size: 1.1rem;
-    background-color: #007bff;
+    background-color: #50C878;
     color: white;
     border: none;
     border-radius: 4px;
@@ -118,15 +118,15 @@
 }
 
 .primary {
-    background-color: #007bff;
+    background-color: #50C878;
     color: white;
     border: none;
 }
 
 .secondary {
     background-color: transparent;
-    border: 2px solid #007bff;
-    color: #007bff;
+    border: 2px solid #50C878;
+    color: #50C878;
 }
 
 /* Responsive Design */

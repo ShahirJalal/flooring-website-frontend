@@ -33,23 +33,23 @@ nav {
 }
 
 .nav-links a:hover {
-    color: #007bff;
+    color: #50C878;
 }
 
 .quote-btn {
-    background-color: #007bff;
+    background-color: #50C878;
     color: white !important;
     border-radius: 4px;
     transition: background-color 0.3s ease;
 }
 
 .quote-btn:hover {
-    background-color: #0056b3;
+    background-color: #45B26F;
 }
 
 .active {
     font-weight: bold;
-    color: #007bff;
+    color: #50C878;
 }
 
 @media (max-width: 768px) {

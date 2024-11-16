@@ -21,16 +21,16 @@
 
 .tab-buttons button {
     padding: 0.8rem 1.5rem;
-    border: 2px solid #007bff;
+    border: 2px solid #50C878;
     background: transparent;
-    color: #007bff;
+    color: #50C878;
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .tab-buttons button.active {
-    background: #007bff;
+    background: #50C878;
     color: white;
 }
 
@@ -99,14 +99,14 @@ th {
     padding: 0.4rem 0.8rem;
     border: none;
     border-radius: 4px;
-    background: #007bff;
+    background: #50C878;
     color: white;
     cursor: pointer;
     transition: background 0.3s ease;
 }
 
 .status-btn:hover {
-    background: #0056b3;
+    background: #45B26F;
 }
 
 @media (max-width: 1200px) {

@@ -84,13 +84,13 @@
     content: "✓";
     position: absolute;
     left: 0;
-    color: #007bff;
+    color: #50C878;
 }
 
 .quote-btn {
     width: 100%;
     padding: 0.8rem;
-    background-color: #007bff;
+    background-color: #50C878;
     color: white;
     border: none;
     border-radius: 4px;
@@ -99,7 +99,7 @@
 }
 
 .quote-btn:hover {
-    background-color: #0056b3;
+    background-color: #45B26F;
 }
 
 @media (max-width: 768px) {
