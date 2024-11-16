@@ -1,80 +1,25 @@
 <div class="portfolio-container">
     <header class="portfolio-header">
-        <h1>Our Past Projects</h1>
-        <p>Take a look at some of our recent flooring installations</p>
+        <h1>Our Work</h1>
+        <p>Browse through some of our recent flooring projects</p>
     </header>
 
+    <div class="portfolio-filters">
+        <button class="filter-btn" [class.active]="activeFilter === 'all'" (click)="filterProjects('all')">All</button>
+        <button class="filter-btn" [class.active]="activeFilter === 'hardwood'" (click)="filterProjects('hardwood')">Hardwood</button>
+        <button class="filter-btn" [class.active]="activeFilter === 'laminate'" (click)="filterProjects('laminate')">Laminate</button>
+        <button class="filter-btn" [class.active]="activeFilter === 'vinyl'" (click)="filterProjects('vinyl')">Vinyl</button>
+    </div>
+
     <div class="portfolio-grid">
-        <div class="portfolio-item">
-            <div class="portfolio-image">
-                <img src="assets/images/portfolio-1.jpg" alt="Hardwood Flooring Installation">
-            </div>
-            <div class="portfolio-content">
-                <h2>Hardwood Flooring Installation</h2>
-                <p>Installed premium hardwood floors in a large residential home</p>
-            </div>
-        </div>
-        <div class="portfolio-item">
-            <div class="portfolio-image">
-                <img src="assets/images/portfolio-2.jpg" alt="Laminate Flooring Upgrade">
-            </div>
-            <div class="portfolio-content">
-                <h2>Laminate Flooring Upgrade</h2>
-                <p>Replaced outdated laminate floors with a modern, water-resistant option</p>
-            </div>
-        </div>
-        <div class="portfolio-item">
-            <div class="portfolio-image">
-                <img src="assets/images/portfolio-3.jpg" alt="Commercial Vinyl Tile Project">
-            </div>
-            <div class="portfolio-content">
-                <h2>Commercial Vinyl Tile Project</h2>
-                <p>Laid high-quality vinyl tiles in a busy office environment</p>
-            </div>
-        </div>
-        <div class="portfolio-item">
-            <div class="portfolio-image">
-                <img src="assets/images/portfolio-4.jpg" alt="Hardwood Floor Refinishing">
-            </div>
-            <div class="portfolio-content">
-                <h2>Hardwood Floor Refinishing</h2>
-                <p>Breathed new life into old hardwood floors with expert refinishing</p>
-            </div>
-        </div>
-        <div class="portfolio-item">
-            <div class="portfolio-image">
-                <img src="assets/images/portfolio-5.jpg" alt="Hardwood Flooring Installation">
-            </div>
-            <div class="portfolio-content">
-                <h2>Hardwood Flooring Installation</h2>
-                <p>Installed premium hardwood floors in a large residential home</p>
-            </div>
-        </div>
-        <div class="portfolio-item">
-            <div class="portfolio-image">
-                <img src="assets/images/portfolio-6.jpg" alt="Laminate Flooring Upgrade">
-            </div>
-            <div class="portfolio-content">
-                <h2>Laminate Flooring Upgrade</h2>
-                <p>Replaced outdated laminate floors with a modern, water-resistant option</p>
-            </div>
-        </div>
-        <div class="portfolio-item">
-            <div class="portfolio-image">
-                <img src="assets/images/portfolio-7.jpg" alt="Commercial Vinyl Tile Project">
-            </div>
-            <div class="portfolio-content">
-                <h2>Commercial Vinyl Tile Project</h2>
-                <p>Laid high-quality vinyl tiles in a busy office environment</p>
-            </div>
-        </div>
-        <div class="portfolio-item">
-            <div class="portfolio-image">
-                <img src="assets/images/portfolio-8.jpg" alt="Hardwood Floor Refinishing">
-            </div>
-            <div class="portfolio-content">
-                <h2>Hardwood Floor Refinishing</h2>
-                <p>Breathed new life into old hardwood floors with expert refinishing</p>
+        <div class="portfolio-item" *ngFor="let project of filteredProjects">
+            <div class="project-image">
+                <img [src]="project.image" [alt]="project.title">
+                <div class="project-overlay">
+                    <h3>{{project.title}}</h3>
+                    <p>{{project.description}}</p>
+                    <span class="project-category">{{project.category}}</span>
+                </div>
             </div>
         </div>
     </div>
