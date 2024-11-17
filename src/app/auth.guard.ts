@@ -1,28 +1,24 @@
-import { Injectable, inject, PLATFORM_ID } from '@angular/core';
-import { Router } from '@angular/router';
-import { isPlatformBrowser } from '@angular/common';
+// auth.guard.ts
+import { Injectable } from '@angular/core';
+import { Router, CanActivate } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
 })
-export class AuthGuard {
-    private router = inject(Router);
-    private platformId = inject(PLATFORM_ID);
+export class AuthGuard implements CanActivate {
+    constructor(private router: Router) {}
 
     canActivate(): boolean {
-        // Check if we're in the browser
-        if (isPlatformBrowser(this.platformId)) {
-            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-            
-            if (!isLoggedIn) {
-                this.router.navigate(['/login']);
-                return false;
-            }
-            
-            return true;
+        console.log('AuthGuard check'); // Debug log
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        
+        if (!isLoggedIn) {
+            console.log('Not logged in, redirecting to login'); // Debug log
+            this.router.navigate(['/login']);
+            return false;
         }
         
-        // For server-side rendering, allow access
+        console.log('Logged in, allowing access'); // Debug log
         return true;
     }
 }
